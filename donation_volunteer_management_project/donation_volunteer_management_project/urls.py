@@ -89,7 +89,7 @@ urlpatterns = [
     ),
     path("profile-volunteer/", views.profile_volunteer.as_view(), name="profile_volunteer"),
     path("changepwd-volunteer/", views.changepwd_volunteer.as_view(), name="changepwd_volunteer"),
-    # vew details
+    # vew details.
     path(
         "donationdetail-donor/<int:pid>",
         views.donationdetail_donor,
