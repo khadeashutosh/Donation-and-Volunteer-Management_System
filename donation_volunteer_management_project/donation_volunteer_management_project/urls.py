@@ -73,38 +73,32 @@ urlpatterns = [
     path("index-volunteer/", views.index_volunteer, name="index_volunteer"),
     path("collection-req/", views.collection_req, name="collection_req"),
     path(
-        "donationrec-volunteer/",
-        views.donationrec_volunteer,
-        name="donationrec_volunteer",
-    ),
+        "donationrec-volunteer/",views.donationrec_volunteer, name="donationrec_volunteer"),
     path(
         "donationnotrec-volunteer/",
         views.donationnotrec_volunteer,
-        name="donationnotrec_volunteer",
-    ),
+        name="donationnotrec_volunteer"),
     path(
         "donationdelivered-volunteer/",
         views.donationdelivered_volunteer,
-        name="donationdelivered_volunteer",
-    ),
+        name="donationdelivered_volunteer"),
+
     path("profile-volunteer/", views.profile_volunteer.as_view(), name="profile_volunteer"),
     path("changepwd-volunteer/", views.changepwd_volunteer.as_view(), name="changepwd_volunteer"),
     # vew details.
     path(
         "donationdetail-donor/<int:pid>",
         views.donationdetail_donor,
-        name="donationdetail_donor",
-    ),
+        name="donationdetail_donor"),
+    
+
+    path("donationrec-detail/<int:pid>", views.donationrec_detail.as_view(), name="donationrec_detail"),
+
+
     path(
-        "donationrec-detail/<int:pid>",
-        views.donationrec_detail.as_view(),
-        name="donationrec_detail",
-    ),
-    path(
-        "donationcollection-detail/<int:pid>",
-        views.donationcollection_detail.as_view(),
-        name="donationcollection_detail",
-    ),
+        "donationcollection-detail/<int:pid>", 
+        views.donationcollection_detail.as_view(),name="donationcollection_detail"),
+
     path('delete_donation/<int:pid>', views.delete_donation, name='delete_donation'),
     path('delete_volunteer/<int:pid>', views.delete_volunteer, name='delete_volunteer'),
     path('delete_area/<int:pid>', views.delete_area, name='delete_area'),
