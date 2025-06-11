@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
 from .forms import UserForm, DonorSignupForm, VolunteerSignupForm,LoginForm, MyPasswordChangeForm , DonateNowForm, DonationAreaForm
 from .models import Donor,Volunteer, Donation ,DonationArea, Gallery
@@ -547,12 +547,15 @@ def collection_req(request):
     donation=Donation.objects.filter(volunteer=volunteer,status="Volunteer Allocated")
     return render(request, "collection-req.html",locals())
 
-def donationrec_volunteer(request):
+def donationrec_volunteer(request): 
     if not request.user.is_authenticated:
         return redirect('/login-volunteer')
-    user=request.user
-    volunteer=Volunteer.objects.get(user=user)
-    donation=Donation.objects.filter(volunteer=volunteer,status="Donation Received ")
+    user = request.user
+    try:
+        volunteer = Volunteer.objects.get(user=user)
+    except Volunteer.DoesNotExist:
+        return redirect('/login-volunteer')
+    donation = Donation.objects.filter(volunteer=volunteer, status="Donation Received")
     return render(request, "donationrec-volunteer.html",locals())
 
 def donationnotrec_volunteer(request):
@@ -681,22 +684,24 @@ class donationrec_detail(View):
     def get(self, request, pid):
         if not request.user.is_authenticated:
             return redirect('/login-admin')
-        donation = Donation.objects.get(id=pid)
-        return render(request, "donationrec-detail.html",locals())
+        donation = get_object_or_404(Donation, id=pid)
+        return render(request, "donationrec-detail.html", {"donation": donation})
+
     def post(self, request, pid):
         if not request.user.is_authenticated:
             return redirect('/login-admin')
-        donation = Donation.objects.get(id=pid)
-        status = request.POST.get['status']
-        deliverypic=request.FILES.get['deliverypic']
-        
+        donation = get_object_or_404(Donation, id=pid)
+        status = request.POST.get('status')
+        deliverypic = request.FILES.get('deliverypic')
+
         try:
             donation.status = status
             donation.updationdate = date.today()
             donation.save()
-            Gallery.objects.create(donation=donation,deliverypic=deliverypic)
+            Gallery.objects.create(donation=donation, deliverypic=deliverypic)
             messages.success(request, "Donation Delivered Successfully")
-        except:
+        except Exception as e:
             messages.warning(request, "Donation Delivery Failed")
-            print("Error")
-        return render(request, "donationrec-detail.html",locals())
+            print("Error:", e)
+
+        return render(request, "donationrec-detail.html", {"donation": donation})
