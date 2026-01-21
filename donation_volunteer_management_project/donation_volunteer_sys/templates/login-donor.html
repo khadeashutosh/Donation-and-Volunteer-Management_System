@@ -1,56 +1,137 @@
-{% extends 'base.html' %} {% load static %} {% block main %}
-<section class="vh-100 gradient-custom">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card bg-dark text-white" style="border-radius: 1rem">
-          <div class="card-body p-5 text-center">
-            <div class="mb-md-5 mt-md-4 pb-5">
-              <h2 class="fw-bold mb-2 text-uppercase">Donor Login</h2>
-              <p class="text-white-50 mb-5">
-                Please enter your login and password!
-              </p>
-            <form action ="" method="POST" enctype="multipart/form-data" novalidate>
-            {% csrf_token %} 
-            {% for fm in form %}
-            <div class="form-group col-sm-12 p-2">
-              {{ fm.label_tag }} {{ fm }}
-              <small class="text-danger">{{ fm.errors|striptags }}</small>
-            </div>
-            {% endfor %} 
-          
-           <div class="form-outline form-white mb-4">
+{% extends 'base.html' %}
+{% load static %}
 
-              <p class="small mb-5 pb-lg-2">
-                <a class="text-white-50" href="#!">Forgot password?</a>
-              </p>
-            <input type="submit" value="Login" class="btn btn-outline-light btn-lg px-5"/>
+{% block main %}
+
+<style>
+
+/* 🌈 Same gradient background like donor dashboard */
+.login-bg{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(135deg,#FAD0C4,#F1A7F1);
+    padding:20px;
+}
+
+/* 🟣 Soft white rounded card */
+.login-card{
+    border-radius:22px;
+    border:none;
+    box-shadow:0 18px 45px rgba(0,0,0,.15);
+    overflow:hidden;
+    background:white;
+}
+
+/* 💜 Donor brand purple header */
+.login-header{
+    background:#4a0d41;   /* same vibe as sidebar */
+    color:white;
+    padding:28px;
+    text-align:center;
+}
+
+.login-header h2{
+    margin:0;
+    font-weight:700;
+}
+
+.login-body{
+    padding:28px;
+}
+
+.form-group label{
+    font-weight:600;
+}
+
+/* 🔘 Rounded form input fields */
+.form-control{
+    border-radius:12px;
+    padding:10px 12px;
+}
+
+/* 💜 Purple login button */
+.btn-login{
+    border-radius:14px;
+    padding:10px;
+    width:100%;
+    font-weight:600;
+    color:white;
+    background:#4a0d41;
+    border:none;
+}
+
+.btn-login:hover{
+    background:#360A31;
+}
+
+.muted{
+    color:#6B7280;
+}
+
+</style>
+
+
+
+<div class="login-bg">
+
+  <div class="card login-card col-lg-5 col-md-7 col-12">
+
+      <div class="login-header">
+          <h2>Donor Login</h2>
+          <small>Welcome back</small>
+      </div>
+
+      <div class="login-body">
+
+          <form action="" method="POST" enctype="multipart/form-data" novalidate>
+              {% csrf_token %}
+
+              {% for fm in form %}
+              <div class="form-group mb-3">
+                  {{ fm.label_tag }}
+                  {{ fm }}
+                  <small class="text-danger">{{ fm.errors|striptags }}</small>
+              </div>
+              {% endfor %}
+
+              <div class="text-end mb-3">
+                  <a href="{% url 'password_reset' %}" class="muted">
+                      Forgot password?
+                  </a>
+              </div>
+
+              <input type="submit" value="Login" class="btn-login">
+
           </form>
-            </div>
-            <div>
-              <p class="mb-0">
-                Don't have an account?
-                <a href="{% url 'signup_donor' %}" class="text-white-50 fw-bold"
-                  >Sign Up</a>
-              </p>
-            </div>
+
+          <div class="text-center mt-3 muted">
+              Don't have an account?
+              <a href="{% url 'signup_donor' %}" style="color:#4a0d41;font-weight:600">
+                  Sign Up
+              </a>
           </div>
+
+
           {% if form.non_field_errors %}
             {% for error in form.non_field_errors %}
             <p class="alert alert-danger my-3">{{ error }}</p>
             {% endfor %}
-            {% endif %}
+          {% endif %}
 
           {% if messages %}
-          {% for message in messages %}
-          <p
-        {% if message.tags %} class="alert alert-{{ message.tags }} my-5" {% endif %}> {{ message }}</p>
-        {% endfor %}
+            {% for message in messages %}
+            <p {% if message.tags %} class="alert alert-{{ message.tags }} my-3" {% endif %}>
+              {{ message }}
+            </p>
+            {% endfor %}
           {% endif %}
-        
-        </div>
+
       </div>
-    </div>
+
   </div>
-</section>
+
+</div>
+
 {% endblock main %}

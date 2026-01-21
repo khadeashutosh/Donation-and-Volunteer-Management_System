@@ -1,61 +1,122 @@
-{% extends 'base.html' %} {% load static %} {% block main %}
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
 
-<section class="vh-100 gradient-custom">
-  <div class="container py-5 h-100">
-    <div class="card bg-dark text-white" style="border-radius: 1rem">
-      <div class="card-body p-5">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <h2 class="fw-bold mb-2 text-uppercase text-center">
-            Volunteer Sign Up
-          </h2>
-          <p class="text-white-50 mb-2 text-center">
-            Please enter following details
-          </p>
-         <form action ="" method="POST" enctype="multipart/form-data" novalidate>
-            {% csrf_token %} 
-            {% for fm in form1 %}
-            <div class="form-group col-sm-12 p-2">
-              {{ fm.label_tag }} {{ fm }}
-              <small class="text-danger">{{ fm.errors|striptags }}</small>
+<style>
+
+  /* Volunteer gradient background (blue theme) */
+  .volunteer-bg{
+      background: linear-gradient(135deg,#9fc2ff,#cde2ff);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      padding:30px 0;
+  }
+
+  /* Volunteer card */
+  .volunteer-card{
+      background:#002b6a;
+      border-radius:20px;
+      color:white;
+      border:none;
+      box-shadow:0 10px 28px rgba(0,0,0,0.18);
+      max-width:900px;
+      margin:auto;
+  }
+
+  .signup-title{
+      font-weight:800;
+      letter-spacing:0.5px;
+  }
+
+  .form-control{
+      border-radius:10px;
+  }
+
+  .btn-theme{
+      border-radius:25px;
+      font-weight:600;
+  }
+
+</style>
+
+
+<section class="volunteer-bg">
+
+  <div class="container">
+
+    <div class="card volunteer-card">
+
+      <div class="card-body px-4 py-4">
+
+        <h3 class="signup-title text-center mb-2">
+          Volunteer Sign Up
+        </h3>
+
+        <p class="text-white-50 text-center mb-3">
+          Please enter the following details
+        </p>
+
+        <form action="" method="POST" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
+
+          <div class="row">
+
+            <!-- USER FORM -->
+            <div class="col-md-6">
+              {% for fm in form1 %}
+              <div class="mb-2">
+                {{ fm.label_tag }}
+                {{ fm }}
+                <small class="text-warning">{{ fm.errors|striptags }}</small>
+              </div>
+              {% endfor %}
             </div>
-            {% endfor %} 
-            {% for fm in form2 %}
-            <div class="form-group col-sm-12 p-2">
-              {{ fm.label_tag }} {{ fm }}
-              <small class="text-danger">{{ fm.errors|striptags }}</small>
-            </div>
-            {% endfor %}
 
-            <div class="d-grid gap-2">
-              <input type="submit" value="Submit" class="mt-4 px-3 btn btn-primary"/>
-            </div>
-
-            <div class="mt-4 px-3 text-center">
-              <p class="mb-0">
-                Already have an account?
-                <a href="{% url 'login_volunteer' %}" class="text-white-50 fw-bold">Login</a>
-                  
-              </p>
+            <!-- VOLUNTEER PROFILE FORM -->
+            <div class="col-md-6">
+              {% for fm in form2 %}
+              <div class="mb-2">
+                {{ fm.label_tag }}
+                {{ fm }}
+                <small class="text-warning">{{ fm.errors|striptags }}</small>
+              </div>
+              {% endfor %}
             </div>
 
-            {% if form.non_field_errors %}
-            {% for error in form.non_field_errors %}
-            <p class="alert alert-danger my-3">{{ error }}</p>
-            {% endfor %}
-            {% endif %}
-          </form>
-
-          {% if messages %}
-          {% for message in messages %}
-          <p
-        {% if message.tags %} class="alert alert-{{ message.tags }} my-5" {% endif %}> {{ message }}</p>
-        {% endfor %}
-          {% endif %}
-            </p>
           </div>
-        </div>
+
+          <div class="d-grid mt-3">
+            <input type="submit" value="Submit" class="btn btn-light btn-theme">
+          </div>
+
+          <p class="text-center mt-3 mb-0">
+            Already have an account?
+            <a href="{% url 'login_volunteer' %}" class="text-warning fw-bold">
+              Login
+            </a>
+          </p>
+
+          {% if form.non_field_errors %}
+          {% for error in form.non_field_errors %}
+          <p class="alert alert-danger mt-2">{{ error }}</p>
+          {% endfor %}
+          {% endif %}
+
+        </form>
+
+        {% if messages %}
+        {% for message in messages %}
+        <p class="alert alert-{{ message.tags }} mt-3">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+
       </div>
+
     </div>
+
   </div>
+
 </section>
+
 {% endblock main %}

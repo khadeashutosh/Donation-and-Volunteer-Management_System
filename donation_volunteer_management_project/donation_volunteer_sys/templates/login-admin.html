@@ -1,51 +1,81 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% load static %}
- {% block main %}
-<section class="vh-100 gradient-custom">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card bg-dark text-white" style="border-radius: 1rem">
-          <div class="card-body p-5 text-center">
-            <div class="mb-md-5 mt-md-4 pb-5">
-              <h2 class="fw-bold mb-2 text-uppercase">Admin Login</h2>
-              <p class="text-white-50 mb-5">
-                Please enter your login and password!
-              </p>
-             <form action ="" method="POST" enctype="multipart/form-data" novalidate>
-            {% csrf_token %} 
-            {% for fm in form %}
-            <div class="form-group col-sm-12 p-2">
-              {{ fm.label_tag }} {{ fm }}
-              <small class="text-danger">{{ fm.errors|striptags }}</small>
-            </div>
-            {% endfor %} 
-          
-              <p class="small mb-5 pb-lg-2">
-                <a class="text-white-50" href="{% url 'password_reset' %}">Forgot password?</a>
-              </p>
+{% block main %}
 
-              
-            <input type="submit" value="Login" class="btn btn-outline-light btn-lg px-5"/>
-          </form>
+<style>
+
+  .admin-bg{
+      background:#f5f7fb;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+  }
+
+  .login-card{
+      border-radius:22px;
+      border:none;
+      box-shadow:0 10px 30px rgba(0,0,0,0.12);
+      background:#0d0f24;
+  }
+
+</style>
+
+
+<section class="admin-bg">
+
+  <div class="container">
+    <div class="row justify-content-center">
+
+      <div class="col-lg-5">
+
+        <div class="card text-white login-card">
+
+          <div class="card-body p-5 text-center">
+
+            <h2 class="fw-bold text-uppercase">Admin Login</h2>
+
+            <p class="text-white-50">
+              Please enter your login details
+            </p>
+
+            <form method="POST" novalidate>
+            {% csrf_token %}
+
+            {% for fm in form %}
+            <div class="mb-3 text-start">
+              {{ fm.label_tag }}
+              {{ fm }}
+              <small class="text-warning">{{ fm.errors|striptags }}</small>
             </div>
-          </div>
-          {% if form.non_field_errors %}
-            {% for error in form.non_field_errors %}
-            <p class="alert alert-danger my-3">{{ error }}</p>
             {% endfor %}
-            {% endif %}
+
+            <p class="small">
+              <a class="text-white-50" href="{% url 'password_reset' %}">
+                Forgot password?
+              </a>
+            </p>
+
+            <button class="btn btn-light px-5 rounded-pill">
+              Login
+            </button>
+
+            </form>
+
+          </div>
 
           {% if messages %}
           {% for message in messages %}
-          <p
-        {% if message.tags %} class="alert alert-{{ message.tags }} my-5" {% endif %}> {{ message }}</p>
-        {% endfor %}
+          <p class="alert alert-{{ message.tags }} m-3">{{ message }}</p>
+          {% endfor %}
           {% endif %}
-        
+
         </div>
+
       </div>
+
     </div>
   </div>
+
 </section>
+
 {% endblock main %}

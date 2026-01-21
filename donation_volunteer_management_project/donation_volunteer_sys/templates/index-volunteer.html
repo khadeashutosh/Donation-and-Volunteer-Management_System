@@ -1,113 +1,128 @@
-{% extends 'base-db-volunteer.html' %} {% load static %}
-<!-- Home Dashboard -->
+{% extends 'base-db-volunteer.html' %}
+{% load static %}
+
 {% block main %}
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-lg-6 col-md-6 mt-2">
-      <div class="card text-center">
-        <div class="card-header pt-5 bg-primary text-white">
-          <div>
-            <h3>New Donation Collection Request</h3>
-            <hr />
-          </div>
-          <div class="row align-items-center pt-3">
-            <div class="col">
-              <i class="fa fa-list fa-3x"></i>
-            </div>
-            <div class="col">
-              <h3 class="display-3">{{totalCollectionReq}}</h3>
-            </div>
-          </div>                      
-        </div>
-        <div class="card-footer">
-          <h4>
-            <a href="{% url 'collection_req' %}" class="text-primary"
-              >View Details</a
-            >
-          </h4>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-6 col-md-6 mt-2">
-      <div class="card text-center">
-        <div class="card-header bg-success text-white pt-5">
-          <div>
-            <h3>Total Donation Received</h3>
-            <hr />
-          </div>
-          <div class="row align-items-center pt-3">
-            <div class="col">
-              <i class="fa fa-snowflake fa-3x"></i>
-            </div>
-            <div class="col">
-              <h3 class="display-3">{{totalRecDonation}}</h3>
-            </div>                    
-          </div>
-        </div>
-        <div class="card-footer">
-          <h4>
-            <a href="{% url 'donationrec_volunteer' %}" class="text-primary"
-              >View Details</a
-            >
-          </h4>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row mt-5">
-    <div class="col-lg-6 col-md-6 mt-2">
-      <div class="card text-center">
-        <div class="card-header bg-danger text-white pt-5">
-          <div>
-            <h3>Total Donation Not Received</h3>
-            <hr />
-          </div>
-          <div class="row align-items-center pt-3">
-            <div class="col">
-              <i class="fa fa-arrows fa-3x"></i>
-            </div>
-            <div class="col">
-              <h3 class="display-3">{{totalNotRecDonation}}</h3>
-            </div>                     
+
+<style>
+
+  .stat-card{
+      border-radius:18px;
+      border:none;
+      box-shadow:0 10px 25px rgba(0,0,0,0.08);
+      transition:.3s;
+  }
+
+  .stat-card:hover{
+      transform:translateY(-6px);
+  }
+
+  .stat-header{
+      border-radius:18px 18px 0 0;
+      padding:28px 20px;
+  }
+
+  .stat-title{
+      font-size:18px;
+      font-weight:600;
+      margin-bottom:12px;
+  }
+
+  .stat-value{
+      font-size:44px;
+      font-weight:800;
+  }
+
+  .details-link{
+      text-decoration:none;
+      font-weight:600;
+  }
+
+</style>
+
+
+<div class="container mt-4">
+
+  <!-- ROW 1 -->
+  <div class="row g-4">
+
+    <div class="col-lg-6 col-md-6">
+      <div class="card stat-card text-center">
+        <div class="stat-header bg-primary text-white">
+          <div class="stat-title">New Donation Collection Requests</div>
+          <div class="row align-items-center">
+            <div class="col"><i class="fa fa-list fa-2x"></i></div>
+            <div class="col stat-value">{{ totalCollectionReq }}</div>
           </div>
         </div>
-        <div class="card-footer">
-          <h4>
-            <a href="{% url 'donationnotrec_volunteer' %}" class="text-primary"
-              >View Details</a
-            >
-          </h4>
+        <div class="card-body">
+          <a href="{% url 'collection_req' %}" class="details-link text-primary">
+            View Details →
+          </a>
         </div>
       </div>
     </div>
 
-    <div class="col-lg-6 col-md-6 mt-2">
-      <div class="card text-center">
-        <div class="card-header bg-secondary text-white pt-5">
-          <div>
-            <h3>Total Donation Delivered</h3>
-            <hr />
-          </div>
-          <div class="row align-items-center pt-3">
-            <div class="col">
-              <i class="fa fa-exchange fa-3x"></i>
-            </div>
-            <div class="col">
-              <h3 class="display-3">{{totalDonationDelivered}}</h3>
-            </div>                     
+
+    <div class="col-lg-6 col-md-6">
+      <div class="card stat-card text-center">
+        <div class="stat-header bg-success text-white">
+          <div class="stat-title">Total Donation Received</div>
+          <div class="row align-items-center">
+            <div class="col"><i class="fa fa-check-circle fa-2x"></i></div>
+            <div class="col stat-value">{{ totalRecDonation }}</div>
           </div>
         </div>
-        <div class="card-footer">
-          <h4>
-            <a
-              href="{% url 'donationdelivered_volunteer' %}"
-              class="text-primary"
-              >View Details</a
-            >
-          </h4>
+        <div class="card-body">
+          <a href="{% url 'donationrec_volunteer' %}" class="details-link text-success">
+            View Details →
+          </a>
         </div>
       </div>
     </div>
+
   </div>
+
+
+  <!-- ROW 2 -->
+  <div class="row g-4 mt-1">
+
+    <div class="col-lg-6 col-md-6">
+      <div class="card stat-card text-center">
+        <div class="stat-header bg-danger text-white">
+          <div class="stat-title">Total Donation Not Received</div>
+          <div class="row align-items-center">
+            <div class="col"><i class="fa fa-times-circle fa-2x"></i></div>
+            <div class="col stat-value">{{ totalNotRecDonation }}</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <a href="{% url 'donationnotrec_volunteer' %}" class="details-link text-danger">
+            View Details →
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-lg-6 col-md-6">
+      <div class="card stat-card text-center">
+        <div class="stat-header bg-secondary text-white">
+          <div class="stat-title">Total Donation Delivered</div>
+          <div class="row align-items-center">
+            <div class="col"><i class="fa fa-truck fa-2x"></i></div>
+            <div class="col stat-value">{{ totalDonationDelivered }}</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <a href="{% url 'donationdelivered_volunteer' %}" class="details-link text-secondary">
+            View Details →
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 </div>
+
 {% endblock main %}
