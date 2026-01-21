@@ -1,3 +1,17 @@
 
-# Ignore the virtual environment directory.
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Django media
+media/
+
+# Database
+db.sqlite3
+
+# Virtual env
 donate_env/
+env/
+venv/
+.venv/
