@@ -80,16 +80,16 @@ DATABASES = {
     }
 }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',  
-        'NAME': 'Donation_and_volunteer',           
-        'USER': 'postgres',         
-        'PASSWORD': '@Ashu1010', 
-        'HOST': 'localhost',      
-        'PORT': '5430',           
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',  
+#         'NAME': 'Donation_and_volunteer',           
+#         'USER': 'postgres',         
+#         'PASSWORD': '@Ashu1010', 
+#         'HOST': 'localhost',      
+#         'PORT': '5430',           
+#     }
+# }
 
 
 # Password validation
