@@ -13,7 +13,7 @@ def index(request):
 def gallery(request):
     gallery=Gallery.objects.all()
     return render(request, "gallery.html",locals())
-class login_admin(View):
+class login_admin(View): 
     def get(self,request):
         form=LoginForm()
         return render(request, "login-admin.html",locals())
