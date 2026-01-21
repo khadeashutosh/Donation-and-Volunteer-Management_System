@@ -4,8 +4,6 @@
 # Django media
 media/
 
-
-
 # Virtual env
 donate_env/
 env/
