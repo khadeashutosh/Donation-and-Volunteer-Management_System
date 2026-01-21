@@ -4,8 +4,7 @@
 # Django media
 media/
 
-# Database
-db.sqlite3
+
 
 # Virtual env
 donate_env/
